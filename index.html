@@ -6,7 +6,7 @@
   <title>Mi Prinshesa · Día del Amor</title>
   <style>
     /* reset y base */
-        * {
+    * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
@@ -73,6 +73,7 @@
         transition: transform .3s ease;
         user-select: none;
     }
+    
     .heart-img{
         width: clamp(50%, 50%, 50%);
         height: auto;
@@ -80,6 +81,7 @@
         pointer-events: none;
         user-select: none;
     }
+    
     .big-heart:hover {
       transform: scale(1.08);
     }
@@ -121,7 +123,7 @@
       border: 1px solid rgba(100, 200, 100, 0.2);
     }
 
-    /* ------- CONTENEDOR DEL CORAZÓN DE FOTOS (ANTIGUO ÁRBOL) A LA IZQUIERDA ------- */
+    /* ------- CONTENEDOR DEL CORAZÓN DE FOTOS ------- */
     .image-container {
       position: absolute;
       top: 0;
@@ -146,7 +148,7 @@
     /* Collage de fotos Polaroid */
     #collage-container {
       position: relative;
-      width: 420px;
+      width: 420px; /* El JS espera este tamaño exacto */
       height: 500px;
       pointer-events: auto; /* Permite interactuar con las fotos */
     }
@@ -181,7 +183,7 @@
       box-shadow: 0 10px 35px rgba(0, 100, 0, 0.25);
     }
 
-    /* ------- BOLITA VERDE QUE CAE (CENTRADA) ------- */
+    /* ------- BOLITA VERDE QUE CAE ------- */
     .ball-falling {
       position: absolute;
       top: -10%;
@@ -234,17 +236,8 @@
       pointer-events: auto;
     }
 
-    .message-overlay h2 {
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      color: #064e3b; /* Verde oscuro */
-      margin-bottom: 0.3rem;
-      letter-spacing: 0.02em;
-      font-weight: 700;
-      text-shadow: 0 2px 15px rgba(0, 200, 50, 0.2);
-    }
-
     .message-overlay .te-amo-grande {
-      font-size: clamp(2rem, 6vw, 4rem);
+      font-size: clamp(3rem, 8vw, 6rem);
       color: #064e3b;
       font-weight: 900;
       text-shadow: 0 2px 20px rgba(0, 200, 50, 0.15);
@@ -295,55 +288,95 @@
       }
     }
 
-    /* ------- RESPONSIVE ------- */
-    @media (max-width: 700px) {
+    /* ------- RESPONSIVE PARA CELULARES Y TABLETS ------- */
+    @media (max-width: 850px) {
       .love-scene {
         aspect-ratio: auto;
-        min-height: 90vh;
+        min-height: 100dvh;
+        height: auto;
         border-radius: 32px;
+        padding: 0rem;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.4);
+      }
+
+      .heart-text-wrapper {
+        height: auto;
+        min-height: 80vh;
         padding: 1rem;
       }
+      
+      .heart-img {
+        width: clamp(30%, 60%, 60%);
+      }
+
       .side-text {
         font-size: clamp(1.5rem, 6vw, 2.8rem);
         padding: 0.2rem 1rem;
       }
-      .message-overlay {
-        width: 80%;
-        right: 10%;
-        top: 10%;
-        height: 75%;
-        padding: 1.2rem 1rem;
+
+      .image-container {
+        position: relative;
+        width: 100%;
+        height: auto;
+        padding: 1rem 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex: 0 0 auto;
       }
+
+      #collage-container {
+        transform: scale(0.7);
+        transform-origin: center center;
+      }
+
+      .message-overlay {
+        position: relative;
+        width: 92%;
+        right: auto;
+        top: auto;
+        height: auto;
+        min-height: 200px;
+        padding: 1.5rem;
+        margin: 0 auto 2rem auto;
+        border-radius: 48px;
+        transform: translateY(30px) scale(0.95);
+      }
+
+      .message-overlay.show {
+        transform: translateY(0) scale(1);
+      }
+
       .ball-falling {
         width: 28px;
         height: 28px;
         margin-left: -14px;
       }
-      #collage-container {
-        transform: scale(0.45);
-        transform-origin: left center;
-      }
+
       .message-overlay .te-amo-grande {
-        font-size: clamp(3rem, 8vw, 5rem);
+        font-size: clamp(2.5rem, 5vw, 4rem);
       }
     }
 
-    @media (max-width: 450px) {
-      .message-overlay {
-        width: 90%;
-        right: 5%;
-        top: 8%;
-        height: 72%;
-        padding: 0.8rem 0.8rem;
+    @media (max-width: 500px) {
+      .love-scene {
+        border-radius: 20px;
       }
       #collage-container {
-        transform: scale(0.35);
-        transform-origin: left center;
+        transform: scale(0.55);
+        transform-origin: center center;
       }
-      .ball-falling {
-        width: 24px;
-        height: 24px;
-        margin-left: -12px;
+      .message-overlay {
+        width: 95%;
+        padding: 1.2rem;
+        border-radius: 32px;
+      }
+      .message-overlay p {
+        font-size: clamp(1rem, 2.5vw, 1.4rem);
       }
     }
 
@@ -358,7 +391,7 @@
   <!-- fase 1: corazón gigante CENTRADO -->
   <div class="heart-text-wrapper" id="heartTextWrapper">
     <div class="big-heart" id="clickHeart">
-    <img src="corazonverde.png" alt="Corazón" class="heart-img">
+      <img src="corazonverde.png" alt="Corazón" class="heart-img">
     </div>
     <div class="side-text">Mi Prinshesa</div>
     <div class="click-hint">HAZ CLICK EN EL CORAZÓN</div>
@@ -367,16 +400,16 @@
   <!-- BOLITA VERDE (centrada) -->
   <div class="ball-falling" id="ballFalling"></div>
 
-  <!-- Contenedor del Corazón de Fotos (a la izquierda) -->
+  <!-- Contenedor del Corazón de Fotos -->
   <div class="image-container" id="imageContainer">
     <div id="collage-container"></div>
   </div>
 
-  <!-- mensaje principal - ocupa el alto, a la derecha -->
+  <!-- mensaje principal -->
   <div class="message-overlay" id="messageOverlay">
     <div class="te-amo-grande">TE AMO</div>
-    <p>Hoy 1 de agosto,aun no somos novios, <br />
-       pronto  lo seremos mi prinshesa<br />
+    <p>Hoy 1 de agosto, aun no somos novios, <br />
+       pronto lo seremos mi prinshesa<br />
        soy el hombre mas afortunado por tenerte,
        quiero siempre seguir siendo tu bb tikito
        y tu mi prinshesa
@@ -398,7 +431,7 @@
     const messageOverlay = document.getElementById('messageOverlay');
     const timeCounter = document.getElementById('timeCounter');
 
-    // Fecha de inicio (simulada: 105 días atrás)
+    // Fecha de inicio (simulada: 31 días atrás)
     const startDate = new Date();
     startDate.setDate(startDate.getDate() - 31);
     startDate.setHours(startDate.getHours() - 7);
@@ -425,44 +458,17 @@
     // ============================================================
     // CÓDIGO PARA GENERAR EL CORAZÓN DE FOTOS POLAROID
     // ============================================================
-    // AQUÍ ES DONDE DEBES CAMBIAR POR TUS PROPIAS IMÁGENES
     const fotos = [
-            "FOTO1.jpeg",
-            "FOTO2.jpeg",
-            "FOTO3.jpeg",
-            "FOTO4.jpeg",
-            "FOTO5.jpeg",
-            "FOTO6.jpeg",
-            "FOTO7.jpeg",
-            "FOTO8.jpeg",
-            "FOTO9.jpeg",
-            "FOTO10.jpeg",
-            "FOTO11.jpeg",
-            "FOTO12.jpeg",
-            "FOTO13.jpeg",
-            "FOTO14.jpeg",
-            "FOTO15.jpeg",
-            "FOTO16.jpeg",
-            "FOTO17.jpeg",
-            "FOTO18.jpeg",
-            "FOTO19.jpeg",
-            "FOTO20.jpeg",
-            "FOTO21.jpeg",
-            "FOTO22.jpeg",
-            "FOTO23.jpeg",
-            "FOTO24.jpeg",
-            "FOTO25.jpeg",
-            "FOTO26.jpeg",
-            "FOTO27.jpeg",
-            "FOTO28.jpeg",
-            "FOTO29.jpeg",
-            "FOTO30.jpeg",
-    ]; // Cambia estas URLs por los enlaces de tus fotos
-    // ============================================================
+            "FOTO1.jpeg", "FOTO2.jpeg", "FOTO3.jpeg", "FOTO4.jpeg", "FOTO5.jpeg",
+            "FOTO6.jpeg", "FOTO7.jpeg", "FOTO8.jpeg", "FOTO9.jpeg", "FOTO10.jpeg",
+            "FOTO11.jpeg", "FOTO12.jpeg", "FOTO13.jpeg", "FOTO14.jpeg", "FOTO15.jpeg",
+            "FOTO16.jpeg", "FOTO17.jpeg", "FOTO18.jpeg", "FOTO19.jpeg", "FOTO20.jpeg",
+            "FOTO21.jpeg", "FOTO22.jpeg", "FOTO23.jpeg", "FOTO24.jpeg", "FOTO25.jpeg",
+            "FOTO26.jpeg", "FOTO27.jpeg", "FOTO28.jpeg", "FOTO29.jpeg", "FOTO30.jpeg"
+    ];
 
     const collageContainer = document.getElementById('collage-container');
     const frameCount = 30; // Cantidad de fotos
-    const baseSize = 70;   // Tamaño de la foto
 
     // Función matemática para generar las coordenadas X, Y de un corazón
     function getHeartCoordinate(t) {
@@ -495,7 +501,6 @@
       frame.style.transform = `rotate(${rotation}deg)`;
 
       const img = document.createElement('img');
-      // Si tienes menos fotos que marcos, las repite.
       img.src = fotos[i % fotos.length]; 
       img.alt = `Foto ${i+1}`;
       img.draggable = false;
@@ -529,7 +534,7 @@
           clearInterval(fallInterval);
           ball.style.opacity = '0';
           
-          // Aparece el corazón de fotos polaroid (a la izquierda)
+          // Aparece el corazón de fotos polaroid
           imageContainer.classList.add('show');
           
           // Ocultar el corazón + texto inicial
@@ -542,7 +547,7 @@
           // Empezar a soltar pétalos
           startPetalRain();
           
-          // Mensaje aparece a la derecha
+          // Mensaje aparece
           setTimeout(() => {
             messageOverlay.classList.add('show');
           }, 600);
@@ -570,7 +575,7 @@
         const x = Math.random() * 92 + 2;
 
         if (Math.random() < 0.6) {
-          // === LLUEVE LA IMAGEN corazonverde.png CHIQUITA ===
+          // LLUEVE LA IMAGEN corazonverde.png CHIQUITA
           const heartImg = document.createElement('img');
           heartImg.src = 'corazonverde.png';
           heartImg.alt = '';
@@ -579,7 +584,7 @@
           heartImg.style.display = 'block';
           petal.appendChild(heartImg);
         } else {
-          // === LLUEVE EL TEXTO TE AMO ===
+          // LLUEVE EL TEXTO TE AMO
           petal.textContent = 'TE AMO';
           petal.style.fontSize = size;
           petal.style.color = '#064e3b';
@@ -628,8 +633,6 @@
         }, i * 70);
       }
     }
-
-    console.log('💚 Página de amor verde - Corazón de fotos Polaroid a la izquierda');
   })();
 </script>
 </body>
